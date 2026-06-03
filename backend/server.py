@@ -170,7 +170,7 @@ async def get_products(
     category: Optional[str] = None,
     featured: Optional[bool] = None,
     search: Optional[str] = None,
-    limit: int = Query(100, ge=1, le=100)
+    limit: int = Query(100, ge=1, le=1000)
 ):
     """Obtener productos con filtros opcionales"""
     query = {}
