@@ -32,7 +32,7 @@ export default function Products() {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      let url = '/products?limit=1050';
+      let url = '/products?limit=1000';
       if (selectedCategory) url += `&category=${selectedCategory}`;
       if (searchTerm) url += `&search=${searchTerm}`;
       
