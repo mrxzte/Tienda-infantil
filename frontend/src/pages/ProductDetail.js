@@ -167,9 +167,19 @@ export default function ProductDetail() {
                     >
                       -
                     </button>
-                    <span className="w-12 text-center font-bold text-gray-900">
-                      {quantity}
-                    </span>
+                    <input
+                      type="number"
+                      value={quantity}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value);
+                        if (!isNaN(val) && val >= 1 && val <= product.stock) {
+                          setQuantity(val);
+                        }
+                      }}
+                      className="w-16 text-center font-bold text-gray-900 border border-gray-200 rounded-xl py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      min="1"
+                      max={product.stock}
+                    />
                     <button
                       onClick={() => setQuantity(Math.min(product.stock, quantity + 1))}
                       className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-xl font-bold text-gray-700 transition-colors"
