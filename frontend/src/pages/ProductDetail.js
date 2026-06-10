@@ -53,6 +53,24 @@ export default function ProductDetail() {
     setAdding(false);
   };
 
+  const handleQuantityChange = (e) => {
+    const val = e.target.value;
+    if (val === '' || val === '0') {
+      setQuantity('');
+      return;
+    }
+    const num = parseInt(val);
+    if (!isNaN(num) && num >= 1 && num <= product.stock) {
+      setQuantity(num);
+    }
+  };
+
+  const handleQuantityBlur = () => {
+    if (quantity === '' || quantity < 1) {
+      setQuantity(1);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -81,7 +99,6 @@ export default function ProductDetail() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Back button */}
         <button
           onClick={() => navigate('/products')}
           className="flex items-center gap-2 text-gray-500 hover:text-gray-800 mb-8 text-sm font-medium group"
@@ -91,7 +108,6 @@ export default function ProductDetail() {
         </button>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Image */}
           <div className="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100">
             <div className="aspect-square bg-gray-50 flex items-center justify-center relative">
               {product.image_base64 ? (
@@ -111,7 +127,6 @@ export default function ProductDetail() {
             </div>
           </div>
 
-          {/* Details */}
           <div>
             {product.category && (
               <span className="inline-block bg-sky-50 text-sky-700 text-sm font-bold px-3 py-1 rounded-full mb-4">
@@ -134,7 +149,6 @@ export default function ProductDetail() {
               </div>
             )}
 
-            {/* Stock info */}
             <div className="mb-6 p-4 bg-gray-50 rounded-xl">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-bold text-gray-700">Disponibilidad</span>
@@ -155,7 +169,6 @@ export default function ProductDetail() {
 
             {product.stock > 0 && (
               <div className="space-y-4">
-                {/* Quantity selector */}
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">
                     Cantidad
@@ -170,12 +183,8 @@ export default function ProductDetail() {
                     <input
                       type="number"
                       value={quantity}
-                      onChange={(e) => {
-                        const val = parseInt(e.target.value);
-                        if (!isNaN(val) && val >= 1 && val <= product.stock) {
-                          setQuantity(val);
-                        }
-                      }}
+                      onChange={handleQuantityChange}
+                      onBlur={handleQuantityBlur}
                       className="w-16 text-center font-bold text-gray-900 border border-gray-200 rounded-xl py-2 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       min="1"
                       max={product.stock}
@@ -189,7 +198,6 @@ export default function ProductDetail() {
                   </div>
                 </div>
 
-                {/* Add to cart button */}
                 <button
                   onClick={handleAddToCart}
                   disabled={adding}
