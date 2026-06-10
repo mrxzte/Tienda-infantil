@@ -190,7 +190,7 @@ async def get_products(
             {"description": {"$regex": search, "$options": "i"}}
         ]
     
-    products = await products_collection.find(query, {"_id": 0, "image_base64": 0}).limit(limit).to_list(limit)
+    products = await products_collection.find(query, {"_id": 0}).limit(limit).to_list(limit)
     
     # Agregar información de categoría
     result = []
